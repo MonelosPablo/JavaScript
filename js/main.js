@@ -1,81 +1,120 @@
-let comprar = true
-let alfajores=0
-let galletitas=0
-let gaseosas=0
 
-    let nombre = prompt("Ingresa tu nombre completo")
-    let direccion = prompt("Ingresa la dirección donde querés recibir tu compra")
-    let telefono = parseInt(prompt("Ingresa tu número de Whatsapp para comunicarnos"))  
-    function bienvenido () {
-        console.log("Hola "+nombre+" bienvenido al kiosco virtual")
-    }
-     bienvenido()
+// La contraseña para utilizar por completo el simulador de venta y carga de stock es: admin
 
-
-while(comprar) {
-
-    let menu = parseInt(prompt("Ingrese\n 1 para comprar \n 2 para pagar \n 3 para ver mis datos \n otro numero para salir"))
-
-    switch(menu) {
-        case 1:
-            console.log("¿Qué te gustaría comprar?")
-
-            let carrito = parseInt(prompt("1 para Alfajores\n 2 para Galletitas\n 3 para Gaseosas \n otro número para ir atrás"))
-                switch(carrito) {
-                    case 1:
-                        let alfajores = parseInt(prompt("¿Cuantos alfajores agrego?"))
-                        function cuentaalfajores () {
-                            const valoralfajores = 5
-                        return alfajores*valoralfajores
-                        }
-                        console.log("Serían $"+cuentaalfajores(alfajores)+" por los alfajores")
-                        break
-                    case 2:
-                        let galletitas = parseInt(prompt("¿Cuantas galletitas agrego?"))
-                        function cuentagalletitas () {
-                            
-                            const valorgalletitas = 6
-                        return galletitas*valorgalletitas
-                        }
-                        console.log("Serían $"+cuentagalletitas(galletitas)+" por las galletitas")
-                        break
-                    case 3:
-                        let gaseosas = parseInt(prompt("¿Cuantas gaseosas agrego?"))
-                        function cuentagaseosas () {
-                            const valorgaseosas= 10
-                        return gaseosas*valorgaseosas
-                        }
-                        console.log("Serían $"+cuentagaseosas(gaseosas)+" por las gaseosas")
-                        break
-                    default:
-                        console.log("Atrás")
-
-                }
-            break
-        case 2:
-            console.log("El total por la compra es de $"+totalcompra()+"\nHacé tu pagó por transferencia al siguiente alias: ---------")
-            console.log("siendo "+cuentaalfajores(alfajores)+" de los alfajores")
-            console.log(cuentagalletitas(galletitas)+" de las galletitas")
-            console.log("y "+cuentagaseosas(gaseosas)+" de las gaseosas")
-                function totalcompra () {
-                let comprafinal = cuentaalfajores(alfajores)+cuentagalletitas(galletitas)+cuentagaseosas(gaseosas)
-                return comprafinal
-                }
-            console.log(totalcompra())
-            console.log("El total es de "+totalcompra()+"\n¡Muchas gracias!")
-            break
-        case 3:
-            let datos = ["Nombre: "+nombre, "Dirección de la entrega: "+direccion, "Tu Whatsapp: "+telefono];
-            console.log(datos);
-            break
-        default:
-            console.log("Salir")
-            break
-    }
-
-    let confirmacion = prompt("Desea hacer otra operación? (si/no)").toLowerCase()
-    if(confirmacion == "no") {
-        comprar = false
-        alert("Gracias por comprar en Kiosco Virtual");
+const finalCompra = (compras) => {
+const total = compras.reduce((contador, producto) => contador + compras.carrito, 0)
+console.log(total)
+}
+class Carrito {
+    static idcarrito = 0
+    constructor (tipo, precio, cantidad) {
+        this.id = ++Carrito.idcarrito
+        this.tipo = tipo,
+        this.precio = precio,
+        this.cantidad = cantidad
     }
 }
+const compras = []
+const compraCompleta = (productos) => {
+            let cargaProducto = prompt("Ingrese el id de producto")
+            let cargaCantidad = prompt("¿Cuantos querés?")
+            productos.forEach((producto) => {
+            let precioCarrito = producto.cargaPrecio*cargaCantidad
+            console.log("Producto: "+producto.cargaTipo+" Cantidad: "+cargaCantidad+" Precio: $"+precioCarrito)
+            })
+            const carrito = new Carrito (cargaProducto, precioCarrito, cargaCantidad)
+            compras.push(carrito)
+        
+}
+
+const verCarrito = () => {
+        if(compras.length === 0) {
+        alert("No hay productos en stock")
+    } else {
+        for (const compra of compras) {
+            console.log(compra)  
+        }
+    }
+}
+
+const Login = () => {
+    pass = prompt("Ingresa tu contraseña")
+    console.log("La contraseña ingresada fue "+pass)
+}
+
+class Producto {
+    static id = 0
+    constructor (tipo, marca, precio) {
+        this.id = ++Producto.id
+        this.tipo = tipo,
+        this.marca = marca,
+        this.precio = precio
+    }
+}
+
+const productos = []
+const cargaProductos = () => {
+            Login()
+            if (pass==="admin"){
+            let cargaTipo = prompt("Ingrese el tipo de producto")
+            let cargaMarca = prompt("Ingrese la marca del producto")
+            let cargaPrecio = parseInt(prompt("Ingrese el precio del producto"))
+            const producto = new Producto (cargaTipo, cargaMarca, cargaPrecio)
+            console.log(producto)
+            let pass = "0"
+            productos.push(producto)
+        } else {
+            alert("No estas autorizado para cargar productos")
+        }
+}
+
+const verProductos = () => {
+    if(productos.length === 0) {
+        alert("No hay productos en stock")
+    } else {
+        for (const producto of productos) {
+            console.log(producto)  
+        }
+        Comprar()
+    }
+}
+const Comprar = () => {
+let menucarrito = parseInt(prompt("Elija 1 para hacer una compra\n2 para ver tu carrito\n3 para finalizar tu compra\n4 para cancelar"))
+
+while(menucarrito !== 4) {
+    switch(menucarrito) {
+        case 1:
+            compraCompleta()
+            break
+        case 2:
+            verCarrito()
+            break
+            case 3:
+            finalCompra()
+            break
+        default:
+            alert("Pedido cancelado")
+    }
+    menucarrito = parseInt(prompt("Elija 1 para hacer una compra\n2 para ver tu carrito\n3 para finalizar tu compra\n4 para cancelar"))
+}
+alert("Muchas gracias")
+}
+
+alert("Bienvenido a (tu negocio) Virtual")
+let menu = parseInt(prompt("Elija 1 para ver los productos\n2 para cargar un producto\n3 para salir"))
+
+while(menu !== 3) {
+    switch(menu) {
+        case 1:
+            verProductos()
+            
+            break
+        case 2:
+            cargaProductos()
+            break
+        default:
+            alert("Opcion incorrecta")
+    }
+    menu = parseInt(prompt("Elija 1 para ver los productos\n2 para cargar un producto\n3 para salir"))
+}
+alert("Muchas gracias")
