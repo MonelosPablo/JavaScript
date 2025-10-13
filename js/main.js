@@ -2,7 +2,7 @@
 // La contraseña para utilizar por completo el simulador de venta y carga de stock es: admin
 
 const finalCompra = (compras) => {
-const total = compras.reduce((contador, producto) => contador + compras.carrito, 0)
+const total = compras.reduce((contador, compras) => contador + compras.precioCarrito, 0)
 console.log(total)
 }
 class Carrito {
@@ -18,12 +18,12 @@ const compras = []
 const compraCompleta = (productos) => {
             let cargaProducto = prompt("Ingrese el id de producto")
             let cargaCantidad = prompt("¿Cuantos querés?")
-            productos.forEach((producto) => {
-            let precioCarrito = producto.cargaPrecio*cargaCantidad
-            console.log("Producto: "+producto.cargaTipo+" Cantidad: "+cargaCantidad+" Precio: $"+precioCarrito)
+            productos.forEach((productos) => {
+            let precioCarrito = productos.cargaPrecio*cargaCantidad
+            console.log("Producto: "+productos.cargaTipo+" Cantidad: "+cargaCantidad+" Precio: $"+precioCarrito)
             })
-            const carrito = new Carrito (cargaProducto, precioCarrito, cargaCantidad)
-            compras.push(carrito)
+            const compra = new Carrito (cargaProducto, precioCarrito, cargaCantidad)
+            compras.push(compra)
         
 }
 
@@ -63,10 +63,20 @@ const cargaProductos = () => {
             console.log(producto)
             let pass = "0"
             productos.push(producto)
+            // guardadoProductos()
         } else {
             alert("No estas autorizado para cargar productos")
         }
 }
+// const guardadoProductos = () => {
+// localStorage.setItem("producto", productos)
+// const productoJSON = JSON.stringify(productos)
+// localStorage.setItem("producto", productoJSON)
+// console.log(localStorage.getItem("producto"))
+
+// const productos = JSON.parse(localStorage.getItem("producto"))
+// console.log(productos)
+// }
 
 const verProductos = () => {
     if(productos.length === 0) {
@@ -118,3 +128,4 @@ while(menu !== 3) {
     menu = parseInt(prompt("Elija 1 para ver los productos\n2 para cargar un producto\n3 para salir"))
 }
 alert("Muchas gracias")
+
